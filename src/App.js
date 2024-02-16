@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
 
-function App() {
+import React, { useState } from 'react';
+import PlayerProfile from './components/PlayerProfile';
+import GameList from './components/GameList';
+import GameSearch from './components/GameSearch';
+import UserSearch from './components/UserSearch';
+
+const App = () => {
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+
+  const handlePlayerSelect = (player) => {
+    setSelectedPlayer(player);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Lichess Player Viewer</h1>
+      
+      {/* User Search Component */}
+      <UserSearch onPlayerSelect={handlePlayerSelect} />
+
+      {selectedPlayer && (
+        <div>
+          {/* Player Profile Component */}
+          <PlayerProfile player={selectedPlayer} />
+
+          {/* Game Search Component */}
+          <GameSearch playerId={selectedPlayer.id} />
+
+          {/* Game List Component */}
+          <GameList playerId={selectedPlayer.id} />
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
